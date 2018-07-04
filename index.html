@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dating Recommender Manual Labeling</title>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    
+
+</head>
+<body ng-app="Labeling" ng-controller="topController">
+    <div class="container-fluid">
+        <div class="header clearfix">
+            <nav>
+                <div class="nav-wrapper blue">
+                    <a href="#" class="brand-logo" style="padding-left: 10px">Labeling</a>
+                </div>
+            </nav>            
+        </div>
+        <div class="row">
+        	<div class="col m5">
+        		<h5 ng-show="readyToCompare" style="color: green">Ready to compare</h5>
+        	</div>
+        </div>
+        <div class="row" id="read-users-btn" style="margin-top: 20px">
+            <div class="col m2">
+              <form>
+                <div class="input-field inline">
+                              <input id="samples" type="text" class="" ng-model="your_id">
+                              <label for="samples">Your User ID</label>
+                            </div>
+                </form>
+            </div> 
+            <div class="col m2">
+              <form>
+                <div class="input-field inline">
+                              <input id="samples" type="text" class="" ng-model="rec_id">
+                              <label for="samples">Recommended User ID</label>
+                            </div>
+                </form>
+            </div> 
+            <div class="col m3">
+                <a class="waves-effect waves-light btn blue" ng-click="compareUsers()">Compare User</a>
+            </div>
+            <div class="col m3">
+                <p>
+                    Your id: {{your_id}}<br>
+                    Your Recommendations: {{myCompatibility}}
+                </p>
+            </div>
+        </div>
+        
+        <div id="data-grid" style="display: none">
+            <div class="row" style="margin-top: 50px;">
+                <div class="col m6">
+                    <ol>
+                        <li><b>ID: </b> {{dataA.user_id}}</li>
+                        <li><b>Age: </b> {{dataA.age}}</li>
+                        <li><b>Sex: </b> {{dataA.sex}}</li>
+                        <li><b>Orientation: </b> {{dataA.orientation}}</li>
+                        <li><b>Body type: </b> {{dataA.bodyType}}</li>
+                        <li><b>Diet: </b> {{dataA.diet}}</li>
+                        <li><b>Drinks: </b> {{dataA.drinks}}</li>                    
+                        <li><b>Education: </b> {{dataA.education}}</li>
+                        <li><b>My self summary: </b> {{dataA.essay0}}</li>
+                        <li><b>What I'm doing with my life: </b> {{dataA.essay1}}</li>
+                        <li><b>I'm really good at: </b> {{dataA.essay2}}</li>
+                        <li><b>The first thing people usually notice about me: </b> {{dataA.essay3}}</li>
+                        <li><b>Favorite books, movies, show, music, and food: </b> {{dataA.essay4}}</li>
+                        <li><b>The six things I could never do without: </b> {{dataA.essay5}}</li>
+                        <li><b>I spend a lot of time thinking about: </b> {{dataA.essay6}}</li>
+                        <li><b>On a typical Friday night I am: </b> {{dataA.essay7}}</li>
+                        <li><b>The most private thing I am willing to admit: </b> {{dataA.essay8}}</li>
+                        <li><b>You should message me if...: </b> {{dataA.essay9}}</li>
+                        
+                        <li><b>Ethnicity: </b> {{dataA.ethnicity}}</li>
+                        <li><b>Height: </b> {{dataA.height}}</li>
+                        <!-- <li><b>Income: </b> {{dataA.income}}</li>
+                        <li><b>Job: </b> {{dataA.job}}</li>
+                        <li><b>Last online: </b> {{dataA.last_online}}</li>
+                        <li><b>Location: </b> {{dataA.location}}</li>
+                        <li><b>Offspring: </b> {{dataA.offspring}}</li>
+                        <li><b>Drugs: </b> {{dataA.drugs}}</li> -->
+                        <li><b>Pets: </b> {{dataA.pets}}</li>
+                        <li><b>Religion: </b> {{dataA.religion}}</li>
+                        
+                        <li><b>Sign: </b> {{dataA.sign}}</li>
+                        <li><b>Smokes: </b> {{dataA.smokes}}</li>
+                        <li><b>Speaks: </b> {{dataA.speaks}}</li>
+                        <li><b>Status: </b> {{dataA.status}}</li>
+                    </ol>
+                </div>
+                <div class="col m6">
+                    <ol>
+                        <li><b>ID: </b> {{dataB.user_id}}</li>
+                        <li><b>Age: </b> {{dataB.age}}</li>
+                        <li><b>Sex: </b> {{dataB.sex}}</li>
+                        <li><b>Orientation: </b> {{dataB.orientation}}</li>
+                        <li><b>Body type: </b> {{dataB.bodyType}}</li>
+                        <li><b>Diet: </b> {{dataB.diet}}</li>
+                        <li><b>Drinks: </b> {{dataB.drinks}}</li>                    
+                        <li><b>Education: </b> {{dataB.education}}</li>
+                        <li><b>My self summary: </b> {{dataB.essay0}}</li>
+                        <li><b>What I'm doing with my life: </b> {{dataB.essay1}}</li>
+                        <li><b>I'm really good at: </b> {{dataB.essay2}}</li>
+                        <li><b>The first thing people usually notice about me: </b> {{dataB.essay3}}</li>
+                        <li><b>Favorite books, movies, show, music, and food: </b> {{dataB.essay4}}</li>
+                        <li><b>The six things I could never do without: </b> {{dataB.essay5}}</li>
+                        <li><b>I spend a lot of time thinking about: </b> {{dataB.essay6}}</li>
+                        <li><b>On a typical Friday night I am: </b> {{dataB.essay7}}</li>
+                        <li><b>The most private thing I am willing to admit: </b> {{dataB.essay8}}</li>
+                        <li><b>You should message me if...: </b> {{dataB.essay9}}</li>
+                        
+                        <li><b>Ethnicity: </b> {{dataB.ethnicity}}</li>
+                        <li><b>Height: </b> {{dataB.height}}</li>
+                        <!-- <li><b>Income: </b> {{dataB.income}}</li>
+                        <li><b>Job: </b> {{dataB.job}}</li>
+                        <li><b>Last online: </b> {{dataB.last_online}}</li>
+                        <li><b>Location: </b> {{dataB.location}}</li>
+                        <li><b>Offspring: </b> {{dataB.offspring}}</li>
+                        <li><b>Drugs: </b> {{dataB.drugs}}</li> -->
+                        <li><b>Pets: </b> {{dataB.pets}}</li>
+                        <li><b>Religion: </b> {{dataB.religion}}</li>
+                        
+                        <li><b>Sign: </b> {{dataB.sign}}</li>
+                        <li><b>Smokes: </b> {{dataB.smokes}}</li>
+                        <li><b>Speaks: </b> {{dataB.speaks}}</li>
+                        <li><b>Status: </b> {{dataB.status}}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('Labeling', []);
+
+        app.controller('topController', function ($scope, $http) {
+            usersFile = 'dataset/users_evaluation.json'
+            compFile = 'dataset/compatibility.json'
+            users_us = 'dataset/users_us.json'
+            $scope.readyToCompare = false;
+            $http.get(usersFile).then(function(response){
+                $scope.users = response.data
+                $http.get(users_us).then(function(response_us){            
+                    angular.extend($scope.users, response_us.data);
+                    console.log("Users: %o", $scope.users)
+                    $scope.readyToCompare = true;
+                    Materialize.toast("Users processed", 4000, 'rounded')
+                });
+                
+            });
+            $http.get(compFile).then(function(response){
+                $scope.compatibility = response.data
+                console.log("Compatibility: %o", $scope.compatibility)
+                Materialize.toast("Compatibility processed", 4000, 'rounded')
+            });;
+
+            
+            $scope.compareUsers = function(){
+                //$('#read-users-btn').css("display", "none")
+                $('#data-grid').css("display", "unset")
+                $scope.dataA = $scope.users[$scope.your_id]
+                $scope.dataB = $scope.users[$scope.rec_id]
+                $scope.myCompatibility = $scope.compatibility[$scope.your_id]
+            }
+            
+        });
+    </script>
+</body>
