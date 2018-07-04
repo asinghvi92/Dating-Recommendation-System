@@ -1,4 +1,4 @@
-### PROJECT: Dating/Friendship Recommender
+﻿### PROJECT: Dating/Friendship Recommender
     CS670: Information Storage and Retrieval
 	Spring 2017
 	Texas A&M University
@@ -45,3 +45,4 @@ https://github.tamu.edu/kelly-12azn/datingRecommender
 
 Link to our youtube video:
 https://www.youtube.com/watch?v=byOjiZ26LZQ&feature=youtu.be 
+
